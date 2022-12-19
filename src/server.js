@@ -18,7 +18,7 @@ const config = {
   password: 'daniel',
   dstHost: '138.117.79.26',
   dstPort: 27017,
-  localHost: '127.0.0.1',
+  localHost: 'localhost',
   localPort: 5000
 };
 
@@ -33,13 +33,13 @@ app.use(morgan('dev'))
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-tunnel(config, (error, server) => {
+/* tunnel(config, (error, server) => {
     if (error) {
       console.log(error);
       process.exit(1);
     }
   
-    const dbUrl = `mongodb://${config.localHost}:${config.localPort}/defensoria`;
+    const dbUrl = `mongodb://${config.localHost}:5000/defensoria`;
   
     mongoose.connect(dbUrl, {
       useNewUrlParser: true,
@@ -51,11 +51,12 @@ tunnel(config, (error, server) => {
     db.on('error', console.error.bind(console, 'connection error:'));
   
     db.once('open', function() {
+        initial();
       console.log('Connected to MongoDB through SSH tunnel');
     });
-  });
+  })
 
-function initial() {
+  function initial() {
     Role.estimatedDocumentCount((err, count) => {
         if (!err && count === 0) {
             new Role({
@@ -95,9 +96,9 @@ function initial() {
         }
     });
 }
-
+ */
 // set port, listen for requests
-const PORT = process.env.PORT || 27017;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
